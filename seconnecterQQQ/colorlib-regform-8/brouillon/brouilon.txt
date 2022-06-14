@@ -1,0 +1,43 @@
+professeur
+// isset — Détermine si une variable est déclarée et est différente de null
+// empty() - Détermine si une variable est vide
+// if (isset($_POST['email']) &&  isset($_POST['password'])) 
+
+// if(empty($_POST['email']))
+// {
+// 	echo'email existe pas</br>';
+// }else{
+// 	echo'email existe  </br>';
+// }
+
+
+// if((!empty($_POST['email']))&&(!empty($_POST['password']))&&(!empty($_POST['nom']))&&(!empty($_POST['prenom']))&&(!empty($_POST['re_mdp'])) )
+// {
+// 	$email=$_POST['email'];
+// 	$var_email='momathiam@gmail.com';
+// 	// 
+// 	// 
+// 	$var_mdp=$_POST['password'];
+// 	$mdp='momathiam123';
+// 		if(($email==$var_email)&&($mdp==$var_mdp))
+// 		{
+// 			echo'email et mdp correcte';
+// 			// echo $_POST['email'];
+// 		}else{
+// 			echo'email ou mdp incorrecte';
+// 			echo'</br>';
+// 					// echo $_POST['email'];
+// 		}
+
+// }else if((!empty($_POST['email']))&&(empty($_POST['password']))){
+// 	echo'vieullez remplir le mdp';
+// }
+// else if((empty($_POST['email']))&&(!empty($_POST['password']))){
+// 	echo"vieullez remplir l'email";
+// }
+
+
+// else if((empty($_POST['email']))||(empty($_POST['password']))||(empty($_POST['nom']))||(empty($_POST['prenom']))||(empty($_POST['re_mdp']))  )
+// {
+// 	echo'veuillez revoir un champs du formulaire';
+// }

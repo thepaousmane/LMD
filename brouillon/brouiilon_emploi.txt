@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>emploie du temps</title>
+</head>
+<body>
+	<p>emploie du temps</p>
+	 <form action="#" method="">
+		<table border="1">
+			<?php
+				$lines = file('memoire.docx');
+
+				// display file line by line
+				foreach($lines as $line_num => $line) { ?>
+				    echo "  ".htmlspecialchars($line)."<br />\n";
+			
+			<tr>
+				<td> </td>
+				<td>Lundi</td>
+				<td>Mardi</td>
+				<td>Mercredi</td>
+				<td>Jeudi</td>
+				<td>Vendredi</td>
+				<td>Samedi</td>
+			</tr>
+			<tr>
+				<td>8h-10h</td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+			</tr>
+			<tr>
+				<td>10h-12h</td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+			</tr>
+			<tr>
+				<td>13h-14h30</td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><!-- <input type="text" name="" placeholder="matiere"> --></td>
+			</tr>
+			<tr>
+				<td>14h30-16h</td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><!-- <input type="text" name="" placeholder="matiere"> --></td>
+			</tr>
+			<tr>
+				<td>16h-18h</td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><input type="text" name="" placeholder="matiere"></td>
+				<td><!-- <input type="text" name="" placeholder="matiere"> --></td>
+			</tr>
+		<?php	}
+			?>
+			
+		</table>
+		<input type="submit" name="" value="Planifier">
+	 </form>
+
+<?php
+$lines = file('fichierX.txt');
+
+// display file line by line
+foreach($lines as $line_num => $line) {
+    echo "  ".htmlspecialchars($line)."<br />\n";
+}
+?>
+
+
+</body>
+</html>

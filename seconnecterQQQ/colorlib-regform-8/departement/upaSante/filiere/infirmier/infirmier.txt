@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Infirmier</title>
+</head>
+<body>
+	<p>filiere Infirmier</p>
+	<p>choisir le niveau</p>
+	<a href="niveaux\licence1\licence1.php">
+		<input type="submit" name="licence1SF" value="licence 1"></a>
+
+<!--  -->
+	<a href="niveaux\licence2\licence2.php">
+		<input type="submit" name="licence2SF" value="licence 2"></a>
+
+<!--  -->
+	<a href="niveaux\licence3\licence3.php">
+		<input type="submit" name="licence3SF" value="licence 3"></a>
+	<?php
+
+	    if(isset($_GET['1gfdtrd']))
+	        { 
+	        	echo "semestre 1";
+	        }               
+	?>
+
+
+
+</body>
+</html>
