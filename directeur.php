@@ -68,7 +68,18 @@
 // }else{
 // 	echo'email existe  </br>';
 // }
+//route('toto.php');
+//route('jnvk')
 
+//Function header(){
+//   return(
+// <div>
+//   <h1>
+//     Bégué
+//   </h1>
+// </div>
+//   )
+// }
 
 if((!empty($_POST['email']))&&(!empty($_POST['password'])))
 {
