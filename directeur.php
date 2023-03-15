@@ -1,3 +1,6 @@
+<?php 
+session_start(); ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -98,13 +101,13 @@ if((!empty($_POST['email']))&&(!empty($_POST['password'])))
 			echo'</br>';
 					// echo $_POST['email'];
 		}
-}else if((!empty($_POST['email']))&&(empty($_POST['password']))){
+} if((!empty($_POST['email']))&&(empty($_POST['password']))){
 	echo'vieullez remplir le mdp';
 }
-else if((empty($_POST['email']))&&(!empty($_POST['password']))){
+ if((empty($_POST['email']))&&(!empty($_POST['password']))){
 	echo"vieullez remplir l'email";
 }
-else if((empty($_POST['email']))&&(empty($_POST['password']))){
+ if((empty($_POST['email']))&&(empty($_POST['password']))){
 	echo'veuillez remplir le formulaire';
 }
 ?>
@@ -307,15 +310,242 @@ else if((empty($_POST['email']))&&(empty($_POST['password']))){
     </div>
   </header>
 <!-- <p>c'est le directeur</p> -->
+
+<?php
+  // $str = "Réseaux";
+  // $replaced1 = str_replace(' ', '_', $str);
+  // $replaced2 = str_replace("'", "_", $replaced1);
+  // echo"<br>";
+  // echo $replaced2;
+  // echo"<br>";
+?>
+
+
+
+
+<?php
+// Pour supprimer une section et une specialité 
+if(!empty($_POST['delete_section']))
+{
+  $nom_section=$_SESSION['name_section'];
+
+  $conn2=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+  $sql=$conn2->prepare("DELETE from section WHERE nom_section='".$nom_section."'");
+  $sql->execute();
+
+  $conn2=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+  $sql=$conn2->prepare("DELETE from specialite_section WHERE nom_section='".$nom_section."'");
+  $sql->execute();
+}
+   
+
+
+// Pour supprimer une spéciliaté donnée
+if(!empty($_POST['delete_specialite']))
+{
+  $nom_specialite=$_SESSION['nom_specialite'];
+
+  $conn2=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+  $sql=$conn2->prepare("DELETE from specialite_section WHERE nom_specialite='".$nom_specialite."'");
+  $sql->execute();
+}
+
+?>
+
+<!--//////////////////////--Si valider_departement existe--////////////////////////////////////////////////////////////////-->
+
+<?php
+if(!empty($_POST['valider_departement'])){
+  echo"coucoucoucou";
+  $nom_departement_colonne=$_SESSION['nom_Departement'];
+  $nom_departement_table_transf=$_SESSION['nom_Departement'];
+  $nbr_specialite_d=$_SESSION['nbr_specialite_D'];
+
+    // $str = "Welcom to WayToLearnX d'aptitude";
+    $replaced1 = str_replace(' ', '_', $nom_departement_table_transf);
+    $nom_departement_table = str_replace("'", "_", $replaced1);
+    echo"<br>";
+    echo $nom_departement_table;
+    $_SESSION['nom_departement_table']=$nom_departement_table;
+    echo"<br>";
+
+    $pass='';   
+    $connX = new PDO(
+      "mysql:host=127.0.0.1;dbname=upa","root",$pass, 
+      array(
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+      )
+    );
+
+    // $connX=new PDO("mysql:host=127.0.0.1;dbname=upa","root");
+    $sqlX = "INSERT INTO departement (nom_departement, nom_departement_table, nbr_specialite_departement) VALUES (?,?,?)";
+    $stmtX= $connX->prepare($sqlX);
+    $stmtX->execute([$nom_departement_colonne, $nom_departement_table, $nbr_specialite_d]);
+
+
+
+  for($i=1;$i<=$_SESSION['nbr_specialite_D'];$i++)
+  {
+    // $nom_section=$_SESSION['nom_section'];
+    $nom_speciality_D_colonne=$_POST['specialite_D_'.$i];
+    $nom_speciality_D_table_transf=$_POST['specialite_D_'.$i];
+    $duree_formation_speciality_D=$_POST['duree_formation_D_'.$i];
+
+    $replaced1 = str_replace(' ', '_', $nom_speciality_D_table_transf);
+    $nom_speciality_D_table = str_replace("'", "_", $replaced1);
+    echo"<br>";
+    echo $nom_speciality_D_table;
+    $_SESSION['nom_speciality_D_table']=$nom_speciality_D_table;
+    echo"<br>";
+
+    $pass='';   
+    $connX = new PDO(
+      "mysql:host=127.0.0.1;dbname=upa","root",$pass, 
+      array(
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+      )
+    );
+
+
+    // $conn2=new PDO("mysql:host=127.0.0.1;dbname=upa","root");
+    $sql2 = "INSERT INTO specialite_departement (nom_specialite, nom_departement, duree_formation_specialite_D) VALUES (?,?,?)";
+    $stmt2= $connX->prepare($sql2);
+    $stmt2->execute([$nom_speciality_D_colonne, $nom_departement_colonne, $duree_formation_speciality_D]);
+  }
+
+
+  try
+  {
+    $conn4=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+    $conn4->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $sql4= "create TABLE IF NOT EXISTS compte_professeur_departement_".$nom_departement_table."(
+    id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    nom varchar(100) NULL,
+    prenom varchar(100) NULL,
+    adresse varchar(240) NULL,
+    date_de_naissance varchar(240) NULL,
+    tel int(100) default 0,
+    email varchar(100) NULL,
+    password varchar(100) NULL
+  )";
+    $conn4->exec($sql4);
+  }catch(PDOException $e)
+  {
+    echo "Erreur quelques part: " . $e->getMessage();
+  }
+
+}
+
+  ?>
+  <!-- <a href="departement\upaSante\filiere\indexFiliereSante.php"> <input type="submit" name="UPAS" value="<?php 
+  // echo "$nom_departement";?>"></a> -->
+
+  <?php
+
+
+$conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+$sql3=$conn->prepare("SELECT * FROM departement");
+$sql3->execute(); 
+// $data=$sql3->fetch();
+// echo $data["nom_section"]; 
+ while($row = $sql3->fetch(PDO::FETCH_ASSOC)) 
+ { 
+  $nom_departement=$row['nom_departement'];
+  $id=$row['id'];
+ ?>
+    <?php 
+    // echo htmlspecialchars($row['nom_section']); ?>
+    <form action="indexFiliere.php" method="post">
+      <!-- <button name="nom_section<?php 
+      // echo $id; ?>" value="<?php 
+      // echo $nom_section; ?>"></button> -->
+    <input type="submit" name="nom_departement<?php echo $id; ?>" value="<?php echo $nom_departement; ?>">
+    <!-- <input type="submit" name="<?php //echo htmlspecialchars($nom_section); ?>" value="<?php //echo htmlspecialchars($row['nom_section']); ?>"> -->
+    </form>
+
+<?php } ?>
+<!--//////////////////////--Si valider_section existe--////////////////////////////////////////////////////////////////-->
+<br>
+<br>
+<?php
+if(!empty($_POST['valider_section'])){
+    $nom_section=$_SESSION['nom_section'];
+    $nbr_specialite=$_SESSION['nbr_specialite'];
+
+    $conn=new PDO("mysql:host=127.0.0.1;dbname=upa","root");
+    $sql = "INSERT INTO section (nom_section, nbr_specialite_section) VALUES (?,?)";
+    $stmt= $conn->prepare($sql);
+    $stmt->execute([$nom_section, $nbr_specialite]);
+
+
+  for($i=1;$i<=$_SESSION['nbr_specialite'];$i++)
+  {
+    // $nom_section=$_SESSION['nom_section'];
+    $nom_speciality=$_POST['specialite_'.$i];
+    $duree_formation_speciality=$_POST['duree_formation_'.$i];
+
+    $conn=new PDO("mysql:host=127.0.0.1;dbname=upa","root");
+    $sql = "INSERT INTO specialite_section (nom_specialite, nom_section, duree_formation_specialite) VALUES (?,?,?)";
+    $stmt= $conn->prepare($sql);
+    $stmt->execute([$nom_speciality, $nom_section, $duree_formation_speciality]);
+  }
+  ?>
+  <a href="departement\upaSante\filiere\indexFiliereSante.php"> <input type="submit" name="UPAS" value="<?php echo "$nom_section";?>"></a>
+
+  <?php
+}
+
+$conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+$sql3=$conn->prepare("SELECT * FROM section");
+$sql3->execute(); 
+// $data=$sql3->fetch();
+// echo $data["nom_section"]; 
+ while($row = $sql3->fetch(PDO::FETCH_ASSOC)) 
+ { 
+  $nom_section=$row['nom_section'];
+  $id=$row['id'];
+ ?>
+    <?php 
+    // echo htmlspecialchars($row['nom_section']); ?>
+    <form action="indexFiliere.php" method="post">
+      <!-- <button name="nom_section<?php 
+      // echo $id; ?>" value="<?php 
+      // echo $nom_section; ?>"></button> -->
+    <input type="submit" name="nom_section<?php echo $id; ?>" value="<?php echo $nom_section; ?>">
+    <!-- <input type="submit" name="<?php //echo htmlspecialchars($nom_section); ?>" value="<?php //echo htmlspecialchars($row['nom_section']); ?>"> -->
+    </form>
+
+
+<?php } ?>
+
+
+
+
 <p> Bienvenue  Directeur</p>
 
-<!-- departement\upaSante\filiere -->
+<!-- <a href="departement\upaSante\filiere\indexFiliereSante.php"> <input type="submit" name="UPAS" value="$nom_section"></a> -->
+<!-- <a href="departement\upaTech\indexFiliereTechnique.php"><input type="submit" name="UPAG" value="UPAT"></a>
+<input type="submit" name="UPAT" value="UPAG"> -->
 <a href="departement\upaSante\filiere\indexFiliereSante.php"> <input type="submit" name="UPAS" value="UPAS"></a>
-<a href="departement\upaTech\indexFiliereTechnique.php"><input type="submit" name="UPAG" value="UPAT"></a>
-<input type="submit" name="UPAT" value="UPAG">
-<a href="departement\upaTech\indexFiliereTechniqueXXX.php"><input type="submit" name="UPAG" value="CREER DEPARTEMENT"></a>
 
 
+
+<a href="departement\upaSante\filiere\creerDepartement.php"><input type="submit" name="create_departement" value="CREER DEPARTEMENT"></a>
+<p>Creer :</p>
+<form action="departement\upaSante\filiere\creerDepartement.php" method="post">
+    <div>
+      <input type="radio" id="section" name="section" value="section">
+      <label for="section">une section(exp : CAP, BT, BTS,...)</label>
+    </div>
+    <div>
+      <input type="radio" id="departement" name="departement" value="depart">
+      <label for="departement">un Département(exp : Informtique, Sante, Biologie...)</label>
+    </div>
+  <input type="submit"/>
+</form>
 
 
 <!-- -------------------FOOTER-----------------------------------------FOOTER-----------------------------------------------------FOOTER---------------------------- -->

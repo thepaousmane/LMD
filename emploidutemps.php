@@ -1,3 +1,13 @@
+<?php session_start(); ?>
+<?php 	
+if(empty($_SESSION['e']))
+		{
+			$_SESSION['e']=1;
+			$_SESSION['cptE']=1;
+		}
+		// &&(empty($_SESSION['cptE'])))
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -247,13 +257,20 @@
 
 	
 	<p>emploie du temps</p>
-	<?php if((empty($_POST['planifier'])))
- 		{
- 			?>
+	<?php 
+	if((empty($_POST['planifier'])))
+ 		{	
+			// $_POST['planifier']='coco';
+ 		?>
+		<form action="emploidutemps.php" method="get">	
+		<!-- <button type="submit" name="ajc" value="toto">Ajouter Colonne</button> -->
+		<input type="submit" name="ajc" value="ajouter ligne">
+
+		</form>
 	 <form action="emploidutemps.php" method="POST">
 		<table border="1">
 			<tr>
-				<td> </td>
+				<td> heures</td>
 				<td>Lundi</td>
 				<td>Mardi</td>
 				<td>Mercredi</td>
@@ -261,29 +278,51 @@
 				<td>Vendredi</td>
 				<td>Samedi</td>
 			</tr>
-			<tr>
-				<td>8h-10h</td>
+			<!-- <input type="button" onclick="addRow(This)" value="supp p22c"/> -->
+	<?php 
+	// for($_SESSION['e']=0;$_SESSION['e'] )
+	if(isset($_GET['ajc']))
+	{
+	// unset($_GET['ajc']);
+	  $_SESSION['e']++;
+	
+	for($_SESSION['cptE']=1;$_SESSION['cptE']<=$_SESSION['e'];$_SESSION['cptE']++)
+	{
+		$_SESSION['cptE_2']=$_SESSION['cptE'];
+	?>
+		<tr>
+			<td>
+				<input type="text" name="heure_cours<?php echo $_SESSION['cptE']; ?>" placeholder="xh-yh">
+			</td>
+		<!-- <td>8h-10h</td> -->
+			<td>
+				<input type="text" name="L_colonne<?php echo $_SESSION['cptE']; ?>" placeholder="matiere">
+			</td>
+
+			<td><input type="text" name="M_colonne<?php echo $_SESSION['cptE']; ?>" placeholder="matiere">
+			</td>
+
+			<td><input type="text" name="Mc_colonne<?php echo $_SESSION['cptE']; ?>" placeholder="matiere">
+			</td>
+
+			<td><input type="text" name="J_colonne<?php echo $_SESSION['cptE']; ?>" placeholder="matiere">
+			</td>
+
+			<td><input type="text" name="V_colonne<?php echo $_SESSION['cptE']; ?>" placeholder="matiere">
+			</td>
+
+			<td><input type="text" name="S_colonne<?php echo $_SESSION['cptE']; ?>" placeholder="matiere">
+			</td>
+		</tr>
+	<?php
+	}
+	}?>
+			<!-- <tr>
 				<td>
-					<input type="text" name="8h10h_L" placeholder="matiere">
+					<input type="text" name="X2hY2h" placeholder="X2hY2h">
 				</td>
 
-				<td><input type="text" name="8h10h_M" placeholder="matiere">
-				</td>
 
-				<td><input type="text" name="8h10h_Mc" placeholder="matiere">
-				</td>
-
-				<td><input type="text" name="8h10h_J" placeholder="matiere">
-				</td>
-
-				<td><input type="text" name="8h10h_V" placeholder="matiere">
-				</td>
-
-				<td><input type="text" name="8h10h_S" placeholder="matiere">
-				</td>
-			</tr>
-			<tr>
-				<td>10h-12h</td>
 				<td><input type="text" name="10h12h_L" placeholder="matiere">
 				</td>
 
@@ -303,7 +342,11 @@
 				</td>
 			</tr>
 			<tr>
-				<td>13h-14h30</td>
+				<td>
+					<input type="text" name="X3hY3h" placeholder="X3hY4h">
+				</td>
+
+
 				<td><input type="text" name="13h12h30_L" placeholder="matiere">
 				</td>
 
@@ -321,7 +364,11 @@
 				<td><input type="text" name="13h12h30_S" placeholder="matiere"></td>
 			</tr>
 			<tr>
-				<td>14h30-16h</td>
+				<td>
+					<input type="text" name="X4hY4h" placeholder="X4hY4h">
+				</td>
+
+
 				<td><input type="text" name="14h30_16h_L" placeholder="matiere">
 				</td>
 
@@ -336,10 +383,13 @@
 
 				<td><input type="text" name="14h30_16h_V" placeholder="matiere">
 				</td>
-				<!-- <td><input type="text" name="14h30_16h_S" placeholder="matiere"></td> -->
 			</tr>
 			<tr>
-				<td>16h-18h</td>
+				<td>
+					<input type="text" name="X5hY5h" placeholder="X5hY5h">
+				</td>
+
+
 				<td><input type="text" name="16h18h_L" placeholder="matiere">
 				</td>
 
@@ -354,13 +404,14 @@
 
 				<td><input type="text" name="16h18h_V" placeholder="matiere">
 				</td>
-				<td><!-- <input type="text" name="" placeholder="matiere"> --></td>
-			</tr>
+				<td></td>
+			</tr> -->
 		</table>
 		<input type="submit" name="planifier" value="planifier">
 	 </form>
 
-<?php } ?>
+<?php 
+} ?>
 
 
 	 <?php if((!empty($_POST['planifier'])))
@@ -368,7 +419,7 @@
  		?>
 	 		<table border="1">
 			<tr>
-				<td> </td>
+				<td>Heures</td>
 				<td>Lundi</td>
 				<td>Mardi</td>
 				<td>Mercredi</td>
@@ -376,19 +427,37 @@
 				<td>Vendredi</td>
 				<td>Samedi</td>
 			</tr>
+			<!-- faire ici une boucle for qui se termine à la fin de la premiere <tr> ouvert -->
+		<?php
+		   for($_SESSION['cptE_2']=1;$_SESSION['cptE_2']<=$_SESSION['cptE'];$_SESSION['cptE_2']++)
+			{
+				$i=$_SESSION['cptE_2'];
+				// echo"dollar i : $i";
+			?>
 			<tr>
-				<td>8h-10h</td>
+				<!-- <td>8h-10h</td> -->
 				<td>
 				<?php
-				 // if((isset($_POST['8h10h_L'])))
-					if((!empty($_POST['8h10h_L']))) 
-	//----------------------------------------------------------------------------PLUTARD METTRE çA if((isset($_POST['8h10h_L'])))--------------------------------------
-					//COMME çA SI L'UTILISATEUR NE REMPLIS PAS LA CAGE çA SERA CONSIDERER COMME VIDE
-					// SI ON NE FAIT PAS çA çA VA GARDER L'ANCIENNE VALEUR DANS LA BASE DE DONNEE 
+					if((!empty($_POST['heure_cours'.$_SESSION['cptE_2']])))
 					{
-					   $matiere=$_POST['8h10h_L'];
+					   $heure=$_POST['heure_cours'.$_SESSION['cptE_2']];
 				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 8h_10h ='".$matiere."' where id=1 ");
+					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET heure_cours ='".$heure."' where id=$i");
+					   $sql3->execute(); 
+					   echo $heure;
+					   //Ou bien pour plus de sureté afficher heure du cours depuis la table heure_cours 
+					   // de la base de donnée horaire_cours de 
+					}
+				?>
+				</td>
+
+				<td>
+				<?php
+					if((!empty($_POST['L_colonne'.$_SESSION['cptE_2']]))) 
+					{
+					   $matiere=$_POST['L_colonne'.$_SESSION['cptE_2']];
+				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET ligne_$i ='".$matiere."' where id=1 ");
 					   $sql3->execute(); 
 					   echo $matiere;
 					}
@@ -397,11 +466,11 @@
 
 				<td>
 				<?php
-					if((!empty($_POST['8h10h_M'])))
+					if((!empty($_POST['M_colonne'.$_SESSION['cptE_2']])))
 					{
-					   $matiere=$_POST['8h10h_M'];
+					   $matiere=$_POST['M_colonne'.$_SESSION['cptE_2']];
 				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 8h_10h ='".$matiere."' where id=2 ");
+					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET ligne_$i ='".$matiere."' where id=2 ");
 					   $sql3->execute(); 
 					   echo $matiere;
 					}
@@ -409,25 +478,11 @@
 				</td>
 				<td>
 				<?php
-					if((!empty($_POST['8h10h_Mc'])))
+					if((!empty($_POST['Mc_colonne'.$_SESSION['cptE_2']])))
 					{
-					   $matiere=$_POST['8h10h_Mc'];
+					   $matiere=$_POST['Mc_colonne'.$_SESSION['cptE_2']];
 				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 8h_10h ='".$matiere."' where id=3 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-
-				</td>
-
-				<td>
-				<?php
-					if((!empty($_POST['8h10h_J'])))
-					{
-					   $matiere=$_POST['8h10h_J'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 8h_10h ='".$matiere."' where id=4 ");
+					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET ligne_$i ='".$matiere."' where id=3 ");
 					   $sql3->execute(); 
 					   echo $matiere;
 					}
@@ -436,11 +491,11 @@
 
 				<td>
 				<?php
-					if((!empty($_POST['8h10h_V'])))
+					if((!empty($_POST['J_colonne'.$_SESSION['cptE_2']])))
 					{
-					   $matiere=$_POST['8h10h_V'];
+					   $matiere=$_POST['J_colonne'.$_SESSION['cptE_2']];
 				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 8h_10h ='".$matiere."' where id=5 ");
+					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET ligne_$i ='".$matiere."' where id=4 ");
 					   $sql3->execute(); 
 					   echo $matiere;
 					}
@@ -449,327 +504,117 @@
 
 				<td>
 				<?php
-					if((!empty($_POST['8h10h_S'])))
+					if((!empty($_POST['V_colonne'.$_SESSION['cptE_2']])))
 					{
-					   $matiere=$_POST['8h10h_S'];
+					   $matiere=$_POST['V_colonne'.$_SESSION['cptE_2']];
 				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 8h_10h ='".$matiere."' where id=6 ");
+					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET ligne_$i ='".$matiere."' where id=5 ");
+					   $sql3->execute(); 
+					   echo $matiere;
+					}
+				?>
+				</td>
+
+				<td>
+				<?php
+					if((!empty($_POST['S_colonne'.$_SESSION['cptE_2']])))
+					{
+					   $matiere=$_POST['S_colonne'.$_SESSION['cptE_2']];
+				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET ligne_$i ='".$matiere."' where id=6 ");
 					   $sql3->execute(); 
 					   echo $matiere;
 					}
 				?>
 				</td>
 			</tr>
-			<tr>
+			<?php } ?>
 		<!--  ----------------------------------------------------------------		 -->
 
 
-				<td>10h-12h</td>
-				<td>
-				<?php
-					if((!empty($_POST['10h12h_L'])))
-					{
-					   $matiere=$_POST['10h12h_L'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 10h_12h ='".$matiere."' where id=1 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-				</td>
-
-				<td>
-				<?php
-					if((!empty($_POST['10h12h_M'])))
-					{
-					   $matiere=$_POST['10h12h_M'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 10h_12h ='".$matiere."' where id=2 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-				</td>
-				<td>
-				<?php
-					if((!empty($_POST['10h12h_Mc'])))
-					{
-					   $matiere=$_POST['10h12h_Mc'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 10h_12h ='".$matiere."' where id=3 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-
-				</td>
-
-				<td>
-				<?php
-					if((!empty($_POST['10h12h_J'])))
-					{
-					   $matiere=$_POST['10h12h_J'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 10h_12h ='".$matiere."' where id=4 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-				</td>
-
-				<td>
-				<?php
-					if((!empty($_POST['10h12h_V'])))
-					{
-					   $matiere=$_POST['10h12h_V'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 10h_12h ='".$matiere."' where id=5 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-				</td>
-
-				<td>
-				<?php
-					if((!empty($_POST['10h12h_S'])))
-					{
-					   $matiere=$_POST['10h12h_S'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 10h_12h ='".$matiere."' where id=6 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-				</td>
-			</tr>
+				
+		<!--  ----------------------------------------------------------------		 -->
 		<!--  ----------------------------------------------------------------		 -->
 
-			<tr>
-				<td>13h-14h30</td>
-				<td>
-				<?php
-					if((!empty($_POST['13h12h30_L'])))
-					{
-					   $matiere=$_POST['13h12h30_L'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 13h_14h30 ='".$matiere."' where id=1 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-				</td>
-
-				<td>
-				<?php
-					if((!empty($_POST['13h12h30_M'])))
-					{
-					   $matiere=$_POST['13h12h30_M'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 13h_14h30 ='".$matiere."' where id=2 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-
-				</td>
-
-				<td>
-				<?php
-					if((!empty($_POST['13h12h30_Mc'])))
-					{
-					   $matiere=$_POST['13h12h30_Mc'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 13h_14h30 ='".$matiere."' where id=3 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-				</td>
-
-				<td>
-				<?php
-					if((!empty($_POST['13h12h30_J'])))
-					{
-					   $matiere=$_POST['13h12h30_J'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 13h_14h30 ='".$matiere."' where id=4");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>	
-				</td>
-				<td>
-				<?php
-					if((!empty($_POST['13h12h30_V'])))
-					{
-					   $matiere=$_POST['13h12h30_V'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 13h_14h30 ='".$matiere."' where id=5 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>	
-			</td>
-			<td>
-				<?php
-					if((!empty($_POST['13h12h30_S'])))
-					{
-					   $matiere=$_POST['13h12h30_S'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 13h_14h30 ='".$matiere."' where id=6");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>			
-			</td>
-			</tr>
-		<!--  ----------------------------------------------------------------		 -->
-
-			<tr>
+			<!-- <tr>
 				<td>14h30-16h</td>
 				<td>
 				<?php
-					if((!empty($_POST['14h30_16h_L'])))
-					{
-					   $matiere=$_POST['14h30_16h_L'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 14h30_16h ='".$matiere."' where id=1 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
+					// if((!empty($_POST['14h30_16h_L'])))
+					// {
+					//    $matiere=$_POST['14h30_16h_L'];
+				  	//    $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+					//    $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 14h30_16h ='".$matiere."' where id=1 ");
+					//    $sql3->execute(); 
+					//    echo $matiere;
+					// }
 				?>				
 				</td>
 
 				<td>
 				<?php
-					if((!empty($_POST['14h30_16h_M'])))
-					{
-					   $matiere=$_POST['14h30_16h_M'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 14h30_16h ='".$matiere."' where id=2 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
+					// if((!empty($_POST['14h30_16h_M'])))
+					// {
+					//    $matiere=$_POST['14h30_16h_M'];
+				  	//    $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+					//    $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 14h30_16h ='".$matiere."' where id=2 ");
+					//    $sql3->execute(); 
+					//    echo $matiere;
+					// }
 				?>
 				</td>
 
 				<td>
 				<?php
-					if((!empty($_POST['14h30_16h_Mc'])))
-					{
-					   $matiere=$_POST['14h30_16h_Mc'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 14h30_16h ='".$matiere."' where id=3 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
+					// if((!empty($_POST['14h30_16h_Mc'])))
+					// {
+					//    $matiere=$_POST['14h30_16h_Mc'];
+				  	//    $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+					//    $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 14h30_16h ='".$matiere."' where id=3 ");
+					//    $sql3->execute(); 
+					//    echo $matiere;
+					// }
 				?>
 				</td>
 
 				<td>
 				<?php
-					if((!empty($_POST['14h30_16h_J'])))
-					{
-					   $matiere=$_POST['14h30_16h_J'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 14h30_16h ='".$matiere."' where id=4 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
+					// if((!empty($_POST['14h30_16h_J'])))
+					// {
+					//    $matiere=$_POST['14h30_16h_J'];
+				  	//    $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+					//    $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 14h30_16h ='".$matiere."' where id=4 ");
+					//    $sql3->execute(); 
+					//    echo $matiere;
+					// }
 				?>
 				</td>
 
 				<td>
 				<?php
-					if((!empty($_POST['14h30_16h_V'])))
-					{
-					   $matiere=$_POST['14h30_16h_V'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 14h30_16h ='".$matiere."' where id=5 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
+					// if((!empty($_POST['14h30_16h_V'])))
+					// {
+					//    $matiere=$_POST['14h30_16h_V'];
+				  	//    $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+					//    $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 14h30_16h ='".$matiere."' where id=5 ");
+					//    $sql3->execute(); 
+					//    echo $matiere;
+					// }
 				?>
 				</td>
-				<td><!-- C'EST SAMEDI <input type="text" name="" placeholder="matiere"> --></td>
-			</tr>
-			</tr>
+				<td></td>
+			</tr> -->
+			<!-- </tr> -->
 		<!--  ----------------------------------------------------------------		 -->
 
-			<tr>
-				<td>16h-18h</td>
-				<td>
-				<?php
-					if((!empty($_POST['16h18h_L'])))
-					{
-					   $matiere=$_POST['16h18h_L'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 16h_18h ='".$matiere."' where id=1 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-				</td>
-
-				<td>
-				<?php
-					if((!empty($_POST['16h18h_M'])))
-					{
-					   $matiere=$_POST['16h18h_M'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 16h_18h ='".$matiere."' where id=2 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-				</td>
-
-				<td>
-				<?php
-					if((!empty($_POST['16h18h_Mc'])))
-					{
-					   $matiere=$_POST['16h18h_Mc'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 16h_18h ='".$matiere."' where id=3 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-				</td>
-
-				<td>
-				<?php
-					if((!empty($_POST['16h18h_J'])))
-					{
-					   $matiere=$_POST['16h18h_J'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 16h_18h ='".$matiere."' where id=4 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-				</td>
-
-				<td>
-				<?php
-					if((!empty($_POST['16h18h_V'])))
-					{
-					   $matiere=$_POST['16h18h_V'];
-				  	   $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-					   $sql3=$conn->prepare("UPDATE emploi_temps_licence1_sf SET 16h_18h ='".$matiere."' where id=5 ");
-					   $sql3->execute(); 
-					   echo $matiere;
-					}
-				?>
-				</td>
-				<td><!-- <input type="text" name="" placeholder="matiere"> --></td>
-			</tr>
 		</table>
 		<input type="submit" name="valider" value="Valider">
 		<input type="submit" name="modifier" value="Modifier">
 
-<?php } ?>
+<?php
+	unset($_SESSION['e']);
+}
+ ?>
 
 
 

@@ -1,0 +1,7 @@
+<tr>
+  <td><input type="text" value="<?php if(!empty($_POST['nom_'.$i])){ echo $_POST['nom_'.$i]; } ?>"/></td>
+  <td><input type="text" value="<?php if(!empty($_POST['prenom_'.$i])){ echo $_POST['prenom_'.$i]; } ?>"/></td>
+  <td><input type="text" value="<?php if(!empty($_POST['tel_'.$i])){ echo $_POST['tel_'.$i]; } ?>"/></td>
+  <td><input disabled type="text" value="<?php echo $email.$i; ?>"/></td>
+  <td><input disabled type="text" value="<?php echo $password; ?>"/></td>
+</tr>

@@ -303,7 +303,7 @@ if((!empty($_SESSION['email']))&&(!empty($_SESSION['password'])) )
 //pour responsable pédagogique
 
     $conn2=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-    $sql=$conn2->prepare("SELECT classe, email from responsable_pedagogique where email ='".$email."' ");
+     $sql=$conn2->prepare("SELECT classe, email from responsable_pedagogique where email ='".$email."' ");
     $sql->execute();
     $data2=$sql->fetch();
     // echo count($data2);
@@ -336,12 +336,9 @@ if($nbr>0)
 // {
 
   ?>
-
- <!-- ------------------affichage de l'emploi du temps---------------------------- -->
-
 <table border="1">
       <tr>
-        <td>Heure</td>
+        <td> </td>
         <td>Lundi</td>
         <td>Mardi</td>
         <td>Mercredi</td>
@@ -349,180 +346,295 @@ if($nbr>0)
         <td>Vendredi</td>
         <td>Samedi</td>
       </tr>
-    <!-- A FAIRE ICI MËME :  -->
-      <!-- une table qui ne contient que les heures, puis faire e requête pour avoir le nombre ligne de cette table
-      puis faire une boucle for() pour afficher chaque case de ce fait on se passera litéralement de 
-        <td>8h-10h</td>
-      -->
-
-      <?php
-            $conn4=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            $sql4=$conn4->prepare("SELECT * FROM emploi_temps_licence1_sf ");    
-            $sql4->execute(); 
-            $i=1;
-            while($data4=$sql4->fetch()) 
-            {
-              $nbr = $sql4->rowCount() ;
-            // for($i=1;$i<=$nbr; $i++)
-            // {
-              $conn5=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-              $sql5=$conn5->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf ");    
-              $sql5->execute(); 
-              $data=$sql5->fetch();
-
-      ?>
-            <tr>
-              <td>
-                <?php
-                  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                  $sql3=$conn->prepare("SELECT heure_cours FROM emploi_temps_licence1_sf WHERE id=$i");
-                  $sql3->execute(); 
-                  $data=$sql3->fetch();
-                  echo $data["heure_cours"]; 
-                  ?>
-              </td>
-              <td>
-                  <?php
-                $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                $sql3=$conn->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf WHERE id=1");
-                $sql3->execute(); 
-                $data=$sql3->fetch();
-                echo $data["ligne_$i"]; 
-                ?>
-              </td>
-              <td>
-                <?php
-                $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                $sql3=$conn->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf WHERE id=2");
-                $sql3->execute(); 
-                $data=$sql3->fetch();
-                echo $data["ligne_$i"]; 
-                ?>
-              </td>
-              <td>
-                  <?php
-                  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                  $sql3=$conn->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf WHERE id=3");
-                  $sql3->execute(); 
-                  $data=$sql3->fetch();
-                  echo $data["ligne_$i"]; 
-                  ?>  
-              </td>
-              <td>
-                  <?php
-                  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                  $sql3=$conn->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf WHERE id=4");
-                  $sql3->execute(); 
-                  $data=$sql3->fetch();
-                  echo $data["ligne_$i"]; 
-
-                  ?>
-              </td>
-              <td>
-                  <?php
-                  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                  $sql3=$conn->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf WHERE id=5");
-                  $sql3->execute(); 
-                  $data=$sql3->fetch();
-                  echo $data["ligne_$i"]; 
-
-                  ?>
-              </td>
-              <td>
-                <?php
-                $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                $sql3=$conn->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf WHERE id=6");
-                $sql3->execute(); 
-                $data=$sql3->fetch();
-                echo $data["ligne_$i"]; 
-
-                ?>
-              </td>
-              <!-- <td></td> -->
-            </tr>
-      <?php 
-            // } 
-            $i++;
-          }
-      ?>
-      <!-- <tr>
-
-
+      <tr>
         <td>8h-10h</td>
         <?php 
-        // $c1='heure_cours';
-        //      $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-        //      $sql3=$conn->prepare("SELECT $c1 FROM emploi_temps_licence1_sf WHERE id=1");
-        //      $sql3->execute(); 
-        //      $data=$sql3->fetch();
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 8h_10h FROM emploi_temps_licence1_sf WHERE id=1");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
         ?>
         <td>
-              <?php 
-              // echo $data["$c1"]; 
-              ?>
+              <?php echo $data['8h_10h']; ?>
         </td>
 
       <?php 
-            //   $c1='ligne_1';
-            //  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            //  $sql3=$conn->prepare("SELECT $c1 FROM emploi_temps_licence1_sf WHERE id=2");
-            //  $sql3->execute(); 
-            //  $data=$sql3->fetch();
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 8h_10h FROM emploi_temps_licence1_sf WHERE id=2");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
         ?>
         <td>
-              <?php
-              //  echo $data["$c1"]; 
-               ?>
+              <?php echo $data['8h_10h']; ?>
         </td>
 
       <?php 
-            //  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            //  $sql3=$conn->prepare("SELECT X3hY3h FROM emploi_temps_licence1_sf WHERE id=3");
-            //  $sql3->execute(); 
-            //  $data=$sql3->fetch();
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 8h_10h FROM emploi_temps_licence1_sf WHERE id=3");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
         ?>
         <td>
-              <?php 
-              // echo $data['X3hY3h']; 
-              ?>
+              <?php echo $data['8h_10h']; ?>
         </td>
 
         <?php 
-            //  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            //  $sql3=$conn->prepare("SELECT X4hY4h FROM emploi_temps_licence1_sf WHERE id=4");
-            //  $sql3->execute(); 
-            //  $data=$sql3->fetch();
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 8h_10h FROM emploi_temps_licence1_sf WHERE id=4");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
         ?>
         <td>
-              <?php
-              //  echo $data['X4hY4h']; 
-               ?>
+              <?php echo $data['8h_10h']; ?>
         </td>
         <?php 
-            //  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            //  $sql3=$conn->prepare("SELECT X5hY5h FROM emploi_temps_licence1_sf WHERE id=5");
-            //  $sql3->execute(); 
-            //  $data=$sql3->fetch();
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 8h_10h FROM emploi_temps_licence1_sf WHERE id=5");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
         ?>
         <td>
-              <?php 
-              // echo $data['X5hY5h'];
-              ?>
+              <?php echo $data['8h_10h']; ?>
         </td>
 
         <?php 
-            //  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            //  $sql3=$conn->prepare("SELECT 8h_10h FROM emploi_temps_licence1_sf WHERE id=6");
-            //  $sql3->execute(); 
-            //  $data=$sql3->fetch();
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 8h_10h FROM emploi_temps_licence1_sf WHERE id=6");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
         ?>
         <td>
-              <?php
-              //  echo $data['8h_10h'];
-               ?>
+              <?php echo $data['8h_10h']; ?>
         </td>
-      </tr> -->
+      </tr>
+      <tr>
+        <td>10h-12h</td>
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 10h_12h FROM emploi_temps_licence1_sf WHERE id=1");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['10h_12h']; ?>
+        </td>
 
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 10h_12h FROM emploi_temps_licence1_sf WHERE id=2");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['10h_12h']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 10h_12h FROM emploi_temps_licence1_sf WHERE id=3");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['10h_12h']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 10h_12h FROM emploi_temps_licence1_sf WHERE id=4");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['10h_12h']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 10h_12h FROM emploi_temps_licence1_sf WHERE id=5");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['10h_12h']; ?>
+        </td>
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 10h_12h FROM emploi_temps_licence1_sf WHERE id=6");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['10h_12h']; ?>
+        </td>
+      </tr>
+      <tr>
+        <td>13h-14h30</td>
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 13h_14h30 FROM emploi_temps_licence1_sf WHERE id=1");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['13h_14h30']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 13h_14h30 FROM emploi_temps_licence1_sf WHERE id=2");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['13h_14h30']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 13h_14h30 FROM emploi_temps_licence1_sf WHERE id=3");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['13h_14h30']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 13h_14h30 FROM emploi_temps_licence1_sf WHERE id=4");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['13h_14h30']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 13h_14h30 FROM emploi_temps_licence1_sf WHERE id=5");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['13h_14h30']; ?>
+        </td>
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 13h_14h30 FROM emploi_temps_licence1_sf WHERE id=6");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['13h_14h30']; ?>
+        </td>
+      </tr>
+      <tr>
+        <td>14h30-16h</td>
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 14h30_16h FROM emploi_temps_licence1_sf WHERE id=1");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['14h30_16h']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 14h30_16h FROM emploi_temps_licence1_sf WHERE id=2");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['14h30_16h']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 14h30_16h FROM emploi_temps_licence1_sf WHERE id=3");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['14h30_16h']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 14h30_16h FROM emploi_temps_licence1_sf WHERE id=4");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['14h30_16h']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 14h30_16h FROM emploi_temps_licence1_sf WHERE id=5");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['14h30_16h']; ?>
+        </td>
+        <!-- <td><input type="text" name="14h30_16h_S" placeholder="matiere"></td> -->
+      </tr>
+      <tr>
+        <td>16h-18h</td>
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 16h_18h FROM emploi_temps_licence1_sf WHERE id=1");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['16h_18h']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 16h_18h FROM emploi_temps_licence1_sf WHERE id=2");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['16h_18h']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 16h_18h FROM emploi_temps_licence1_sf WHERE id=3");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['16h_18h']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 16h_18h FROM emploi_temps_licence1_sf WHERE id=4");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['16h_18h']; ?>
+        </td>
+
+        <?php 
+             $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+             $sql3=$conn->prepare("SELECT 16h_18h FROM emploi_temps_licence1_sf WHERE id=5");
+             $sql3->execute(); 
+             $data=$sql3->fetch();
+        ?>
+        <td>
+              <?php echo $data['16h_18h']; ?>
+        </td>
+        <td><!-- <input type="text" name="" placeholder="matiere"> --></td>
+      </tr>
     </table>
 
   <?php if(empty($_SESSION['emploidutemps'])) 
@@ -547,28 +659,31 @@ if($nbr>0)
 
 // ------------------DEB-------------------
   
-    //    $conn1=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-    //    $sql1=$conn1->prepare("SELECT * FROM emploi_temps_licence1_sf");
-    //    $sql1->execute(); 
-    //    $_SESSION['mytab'] = array();
-    //    while($data1=$sql1->fetch())
-    //    {
+       $conn1=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+       $sql1=$conn1->prepare("SELECT * FROM emploi_temps_licence1_sf");
+       $sql1->execute(); 
+       $_SESSION['mytab'] = array();
+       while($data1=$sql1->fetch())
+       {
 
-    //    $matiere8=$data1['8h_10h'];
-    //    $matiere10=$data1['10h_12h'];
-    //    $matiere13=$data1['13h_14h30'];
-    //    $matiere14=$data1['14h30_16h'];
-    //    $matiere16=$data1['16h_18h']; 
-    //  }
+    // $matiere8 signift matiere de h à 10
+       $matiere8=$data1['8h_10h'];
+    // $matiere8=trim(addslashes($matiere8));
+       $matiere10=$data1['10h_12h'];
+       $matiere13=$data1['13h_14h30'];
+       $matiere14=$data1['14h30_16h'];
+       $matiere16=$data1['16h_18h']; 
+     }
        
 
 
 
-    //    $conn2=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-    //    $sql2=$conn2->prepare("UPDATE sm1_licence1_sage_femme SET est_programmer ='VRAI' where matiere='".$matiere8."' || matiere='".$matiere10."' || matiere='".$matiere13."' || matiere='".$matiere14."' || matiere='".$matiere16."' ");
-    //    $sql2->execute();
+       $conn2=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+       $sql2=$conn2->prepare("UPDATE sm1_licence1_sage_femme SET est_programmer ='VRAI' where matiere='".$matiere8."' || matiere='".$matiere10."' || matiere='".$matiere13."' || matiere='".$matiere14."' || matiere='".$matiere16."' ");
+       $sql2->execute();
 // ------------------FIN--------------------------------------------
 
+// ------------------affichage emploi du temps----------------------------
 
        // $connX1=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
      //   $sqlX1=$connX1->prepare("SELECT est_programmer FROM sm1_licence1_sage_femme WHERE est_programmer='VRAI'");
@@ -577,31 +692,53 @@ if($nbr>0)
      //   $nbr=$sqlX1->rowCount();
        // echo $nbr;
        $_SESSION['i']=$nbr;
+
        $conn3=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
        $sql3=$conn3->prepare("SELECT id, professeur, matiere, quantum_horraire, quantum_horraire_cours FROM sm1_licence1_sage_femme where est_programmer='VRAI'");    
-       $sql3->execute(); 
+          $sql3->execute(); 
           $_SESSION['i']=0;
        while($data2=$sql3->fetch()) 
        {
-        $_SESSION['i']++;
-        echo $data2['professeur'];
-        echo" ";
-        echo $data2['matiere'];
-        $mat=$data2['matiere'];
-        echo" ";
-        echo $data2['quantum_horraire'];
-        $qh=$data2['quantum_horraire'];
-         $qhc=$data2['quantum_horraire_cours'];
-         $_SESSION['id']=$data2['id']; 
+         
+          // $id=$data2['id'];
+           // $_SESSION['idx'.$_SESSION['i']]
+    //     if(empty($_SESSION['existe']))
+    //     { 
+    //       for ($_SESSION['i']=1; $_SESSION['i']<=$nbr; $_SESSION['i']++) 
+    //       { 
+  // // code...
+            ?>
+                  <!-- name="id<?php //echo $_SESSION['id']; ?>"  -->
+                  <!-- <progress name="ido" value="6<?php //echo $qhc; ?>" -->
+            <form action=professeur.php method="GET">
+              <legend>Matière <?php // echo $_SESSION['id']; ?></legend>
+                <?php $_SESSION['i']++;
+         echo $data2['professeur'];
+         echo" ";
+         echo $data2['matiere'];
+         $mat=$data2['matiere'];
+         echo" ";
+         echo $data2['quantum_horraire'];
+         // echo $data2['quantum_horraire_cours'];
+         $qh=$data2['quantum_horraire'];
+          $qhc=$data2['quantum_horraire_cours'];
+          $_SESSION['id']=$data2['id'];
+          ?>
+            <progress name="ido" value="<?php echo $qhc; ?>" max="<?php echo $qh; ?>"></progress><?php echo $qhc."Heures"; ?>
+              <input type="submit" name="varXM<?php echo $_SESSION['id']; ?>" value="-">
+              <input type="submit" name="varXP<?php echo $_SESSION['id']; ?>" value="+">
+          </form>
+            <br>
+  <?php 
+        // $_SESSION['existe']=1;
 
+        //  } 
+        // }    
 
-
-
-
-
-
-        if(!empty($_POST['varXM'.$_SESSION['id']]))
+      if(!empty($_GET['varXM'.$_SESSION['id']]))
         {
+        // unset($_SESSION['existe']);
+          // $o=$_GET['varXM'.$_SESSION['id']];
 
           echo "l'id c'est".$_SESSION['id'];
           $idX=$_SESSION['id'];
@@ -613,7 +750,6 @@ if($nbr>0)
           $qhc=$data2X['quantum_horraire_cours'];
           if($qhc>0)
           {
-            echo"on soustrait mon gars";
             $qhc--;
 
             $connxx4=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
@@ -622,22 +758,21 @@ if($nbr>0)
           }
            else if($qhc==0)
            {
-            echo"on fait rien car egale à 0";
-
             $qhc=0;
 
             $connxx4=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
             $sqlx4=$connxx4->prepare("UPDATE sm1_licence1_sage_femme SET quantum_horraire_cours ='".$qhc."' where id='".$idX."'  ");    
             $sqlx4->execute();
            }
-          // unset($_SESSION['id']);
-          // unset($GLOBALS[$_GET['varXM'.$_SESSION['id']]]);
-
-
+          unset($_GET['varXM'.$_SESSION['id']]);
+            // session_destroy();
 
         }
-        if(!empty($_POST['varXP'.$_SESSION['id']]))
+        if(!empty($_GET['varXP'.$_SESSION['id']]))
+        // else if(isset($_GET['varXP'.$_SESSION['id']]))
         {
+          // unset($_SESSION['existe']);
+          // $o=$_GET['varXM'.$_SESSION['id']];
 
           echo "l'id c'est".$_SESSION['id'];
           $idX=$_SESSION['id'];
@@ -650,32 +785,15 @@ if($nbr>0)
           $qh=$data2X['quantum_horraire'];
           if($qhc<$qh)
           {
-            echo"on incrémente mon gars";
             $qhc++;
             $connx4=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
             $sqlx3=$connx4->prepare("UPDATE sm1_licence1_sage_femme SET quantum_horraire_cours ='".$qhc."' where id='".$idX."'  ");   
             $sqlx3->execute();
           }     
-            // unset($GLOBALS[$_GET['varXP'.$_SESSION['id']]]);
-            // unset($GLOBALS[$_GET['art']]);
+            unset($_GET['varXP'.$_SESSION['id']]);
+            // session_destroy();
 
-          }
-            ?>
-
-            <form action=professeur.php method="post">
-              <legend>Matière </legend>
-        <?php 
-
-          ?>
-            <progress name="ido" value="<?php echo $qhc; ?>" max="<?php echo $qh; ?>"></progress><?php echo $qhc."Heures"; ?>
-              <input type="submit" name="varXM<?php echo $_SESSION['id']; ?>" value="-">
-              <input type="submit" name="varXP<?php echo $_SESSION['id']; ?>" value="+">
-              <!-- <button></button> -->
-          </form>
-            <br>
-  <?php   
-
-
+        }
       
         ?>
 

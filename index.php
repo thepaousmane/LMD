@@ -55,6 +55,7 @@
                     <div class="form-group">
                         <input type="submit" name="submit" id="submit" class="form-submit" value="valider"/>
                     </div>
+                    <!-- </form> -->
 
             </div>
             </div>

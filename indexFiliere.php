@@ -1,11 +1,17 @@
-<?php session_start(); ?>
+<?php
+ session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Professeur</title>
-
-  <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8">
+	<title>index Filiere sante</title>
+	<script type="text/javascript">
+	// history.pushState(null, null, "<?php //echo $_SERVER["REQUEST_URI"]; ?>");
+	// window.addEventListener("popstate", function(event) {
+	// window.location.assign("http://localhost/UPA/directeur.php");
+	// });
+</script> 
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
 <link href="css/animate.css" rel="stylesheet" type="text/css">
 <link href="css/css-plugin-collections.css" rel="stylesheet"/>
@@ -40,9 +46,9 @@
 <!-- Revolution Slider 5.x SCRIPTS -->
 <script src="js/revolution-slider/js/jquery.themepunch.tools.min.js"></script>
 <script src="js/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
-</head>
+</head>	
 <body>
-<!---------------------HEADER-------------------licence1GM----------------------HEADER-----------------------------------------------------HEADER------------------------------------->
+	<!---------------------HEADER-----------------------------------------HEADER-----------------------------------------------------HEADER------------------------------------->
 <!-- echo '<html>'; UTILISATION SYMPHONY-->
   <header id="header" class="header">
     <div class="header-top bg-theme-color-2 sm-text-center">
@@ -197,12 +203,9 @@
 
 
 
-              <li>
-              <a href="emploidutemps.php">Emploi du temps
-                <!-- <input type="submit" name="" value="Gestion emploi du temps"> -->
-              </a>
-            </li>
-<!--               <li><a href="#home">Courses</a>
+
+
+              <li><a href="#home">Courses</a>
                 <ul class="dropdown">
                   <li><a href="page-course-gird.html">Course Gird</a></li>
                   <li><a href="page-course-list.html">Course List</a></li>
@@ -215,15 +218,7 @@
                   <li><a href="page-courses-modern-technologies.html">Modern Technologies</a></li>
                   <li><a href="page-courses-software-engineering.html">Software Engineering</a></li>
                 </ul>
-              </li> -->
-
-              <li>
-              <a href="emploidutemps.php">Notes etudiants
-                <!-- <input type="submit" name="" value="Gestion emploi du temps"> -->
-              </a>
-            </li>
-<!--               
-
+              </li>
               <li><a href="#home">Teachers</a>
                 <ul class="dropdown">
                   <li><a href="page-teachers-style1.html">Teachers style 1</a></li>
@@ -231,9 +226,9 @@
                   <li><a href="page-teachers-details.html">Teachers Details</a></li>
                 </ul>
               </li>
--->
 
-   <li class="active"><a href="#home">Se Déconnecter</a>
+
+   <li class="active"><a href="#home">Se connecter</a>
 
                <ul class="dropdown">
                   <li><a href="seconnecter\colorlib-regform-8\index.php?dir=valeur1">Directeur</a>
@@ -251,450 +246,313 @@
       </div>
     </div>
   </header>
-    <!----------------FIN-----HEADER---------------------------FIN--------------HEADER---------------------------FIN--------------------------HEADER------------------------------------->
+  	<!----------------FIN-----HEADER---------------------------FIN--------------HEADER---------------------------FIN--------------------------HEADER------------------------------------->
 
-
-
-
-
-
-
-
-
-
-<!-- <p>c'est le professeur</p> -->
-
-<?php 
-if((!empty($_GET['email']))&&(!empty($_GET['password'])) )
-{
-  $_SESSION['email']=$_GET['email'];
-  $_SESSION['password']=$_GET['password'];
-}
-
-if((!empty($_SESSION['email']))&&(!empty($_SESSION['password'])) )
-{
-  
-  $email=$_SESSION['email'];
-  $password=$_SESSION['password'];
-  $email=trim(addslashes($email));
-  
-
-    $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-    $sql3=$conn->prepare("SELECT email, password from professeur where email ='".$email."' AND password ='".$password."'  ");
-    $sql3->execute();
-    $data=$sql3->fetchALL();
-    echo count($data);
-    // print_r($data);
-
-    if(count($data)>0)
-    {
-      // echo'baxna';
-    }else
-    {
-      echo' email ou mot de passe incorrect ';
-      ?>
-      <script type="text/javascript">
-          window.setTimeout('window.location="http://localhost/UPA/index-mp-layout1.php"; ',2000);
-      // window.location.replace("http://localhost/UPA/index-mp-layout1.php");
-    </script>
+<!--//////////////////////--Pour departement existe--////////////////////////////////////////////////////////////////-->
 <?php
-          exit();
-    }
-//pour responsable pédagogique
+$conn2=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+ $sql=$conn2->prepare("SELECT * from departement");
+ $sql->execute();
+
+ while($row = $sql->fetch(PDO::FETCH_ASSOC)) 
+ { 
+  $nom_section=$row['nom_departement'];
+  $i=$row['id'];
+
+  if(!empty($_POST['nom_departement'.$i]))
+  {
+    $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+    $sql=$conn->prepare("SELECT * from departement where id ='".$i."' ");
+    $sql->execute();
+    $data=$sql->fetch();
+
+    $name_departement=$data['nom_departement'];
+    $_SESSION['name_departement']=$data['nom_departement'];
+
+    echo $data['nom_departement']." exite heiinnn";
 
     $conn2=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-    $sql=$conn2->prepare("SELECT classe, email from responsable_pedagogique where email ='".$email."' ");
-    $sql->execute();
-    $data2=$sql->fetch();
-    // echo count($data2);
-    $nbr = $sql->rowCount() ;
-    // print_r($data2);
-    $classe=$data2['classe'];
-      // echo' <br><br></br> partie responsable pédagogique ';
-      // echo' <br><br></br>';
-
-if($nbr>0)
-{
-   // echo'vous êtes responsable pédagogique de la classe : '.$classe.'';
-    ?>
-    <p style="color: #0035a0;font-size: 18px;">Désigné comme RP de la classe <?php echo $classe; ?></p>
-    <fieldset>
-      <legend>Inscription étudiant</legend>
-      <form action="post_etudiant1.php" method="POST">
-             <div class="form-group">
-                    Entrer le nombre d'étudiants de la classe <input type="number" class="form-input" name="nbr" placeholder="l'effectif des étudiants" required/>
-                    <input type="submit" name="">
-             </div>
+    $sql2=$conn2->prepare("SELECT * from specialite_departement where nom_departement ='".$name_departement."' ");
+    $sql2->execute();
+    while($data2=$sql2->fetch())
+    { 
+      $nom_specialite=$data2['nom_specialite'];
+      $id_sp=$data2['id'];
+      ?>
+      <form action="niveau.php" method="post">
+        <a href="niveau.php"> <input type="submit" name="nom_specialite_D<?php echo $id_sp; ?>" value="<?php echo $nom_specialite; ?>"></a>
       </form>
-    </fieldset>
-    <br><br>
+<?php } ?>
+    
+      <form action="gestion_professeur.php" method="post">
+          <input type="submit" name="gestion_professeur" value="Gestion compte professeur">
+      </form>
+<?php
+  }
+}
+?>
 
 
 <?php
-// else if(!empty($_SESSION['emploidutemps']))
-// //affichage emploi du temps---------------------------------------------------------------------------
-// {
 
-  ?>
-
- <!-- ------------------affichage de l'emploi du temps---------------------------- -->
-
-<table border="1">
-      <tr>
-        <td>Heure</td>
-        <td>Lundi</td>
-        <td>Mardi</td>
-        <td>Mercredi</td>
-        <td>Jeudi</td>
-        <td>Vendredi</td>
-        <td>Samedi</td>
-      </tr>
-    <!-- A FAIRE ICI MËME :  -->
-      <!-- une table qui ne contient que les heures, puis faire e requête pour avoir le nombre ligne de cette table
-      puis faire une boucle for() pour afficher chaque case de ce fait on se passera litéralement de 
-        <td>8h-10h</td>
-      -->
-
-      <?php
-            $conn4=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            $sql4=$conn4->prepare("SELECT * FROM emploi_temps_licence1_sf ");    
-            $sql4->execute(); 
-            $i=1;
-            while($data4=$sql4->fetch()) 
-            {
-              $nbr = $sql4->rowCount() ;
-            // for($i=1;$i<=$nbr; $i++)
-            // {
-              $conn5=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-              $sql5=$conn5->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf ");    
-              $sql5->execute(); 
-              $data=$sql5->fetch();
-
-      ?>
-            <tr>
-              <td>
-                <?php
-                  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                  $sql3=$conn->prepare("SELECT heure_cours FROM emploi_temps_licence1_sf WHERE id=$i");
-                  $sql3->execute(); 
-                  $data=$sql3->fetch();
-                  echo $data["heure_cours"]; 
-                  ?>
-              </td>
-              <td>
-                  <?php
-                $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                $sql3=$conn->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf WHERE id=1");
-                $sql3->execute(); 
-                $data=$sql3->fetch();
-                echo $data["ligne_$i"]; 
-                ?>
-              </td>
-              <td>
-                <?php
-                $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                $sql3=$conn->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf WHERE id=2");
-                $sql3->execute(); 
-                $data=$sql3->fetch();
-                echo $data["ligne_$i"]; 
-                ?>
-              </td>
-              <td>
-                  <?php
-                  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                  $sql3=$conn->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf WHERE id=3");
-                  $sql3->execute(); 
-                  $data=$sql3->fetch();
-                  echo $data["ligne_$i"]; 
-                  ?>  
-              </td>
-              <td>
-                  <?php
-                  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                  $sql3=$conn->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf WHERE id=4");
-                  $sql3->execute(); 
-                  $data=$sql3->fetch();
-                  echo $data["ligne_$i"]; 
-
-                  ?>
-              </td>
-              <td>
-                  <?php
-                  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                  $sql3=$conn->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf WHERE id=5");
-                  $sql3->execute(); 
-                  $data=$sql3->fetch();
-                  echo $data["ligne_$i"]; 
-
-                  ?>
-              </td>
-              <td>
-                <?php
-                $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-                $sql3=$conn->prepare("SELECT ligne_$i FROM emploi_temps_licence1_sf WHERE id=6");
-                $sql3->execute(); 
-                $data=$sql3->fetch();
-                echo $data["ligne_$i"]; 
-
-                ?>
-              </td>
-              <!-- <td></td> -->
-            </tr>
-      <?php 
-            // } 
-            $i++;
-          }
-      ?>
-      <!-- <tr>
-
-
-        <td>8h-10h</td>
-        <?php 
-        // $c1='heure_cours';
-        //      $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-        //      $sql3=$conn->prepare("SELECT $c1 FROM emploi_temps_licence1_sf WHERE id=1");
-        //      $sql3->execute(); 
-        //      $data=$sql3->fetch();
-        ?>
-        <td>
-              <?php 
-              // echo $data["$c1"]; 
-              ?>
-        </td>
-
-      <?php 
-            //   $c1='ligne_1';
-            //  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            //  $sql3=$conn->prepare("SELECT $c1 FROM emploi_temps_licence1_sf WHERE id=2");
-            //  $sql3->execute(); 
-            //  $data=$sql3->fetch();
-        ?>
-        <td>
-              <?php
-              //  echo $data["$c1"]; 
-               ?>
-        </td>
-
-      <?php 
-            //  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            //  $sql3=$conn->prepare("SELECT X3hY3h FROM emploi_temps_licence1_sf WHERE id=3");
-            //  $sql3->execute(); 
-            //  $data=$sql3->fetch();
-        ?>
-        <td>
-              <?php 
-              // echo $data['X3hY3h']; 
-              ?>
-        </td>
-
-        <?php 
-            //  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            //  $sql3=$conn->prepare("SELECT X4hY4h FROM emploi_temps_licence1_sf WHERE id=4");
-            //  $sql3->execute(); 
-            //  $data=$sql3->fetch();
-        ?>
-        <td>
-              <?php
-              //  echo $data['X4hY4h']; 
-               ?>
-        </td>
-        <?php 
-            //  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            //  $sql3=$conn->prepare("SELECT X5hY5h FROM emploi_temps_licence1_sf WHERE id=5");
-            //  $sql3->execute(); 
-            //  $data=$sql3->fetch();
-        ?>
-        <td>
-              <?php 
-              // echo $data['X5hY5h'];
-              ?>
-        </td>
-
-        <?php 
-            //  $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            //  $sql3=$conn->prepare("SELECT 8h_10h FROM emploi_temps_licence1_sf WHERE id=6");
-            //  $sql3->execute(); 
-            //  $data=$sql3->fetch();
-        ?>
-        <td>
-              <?php
-              //  echo $data['8h_10h'];
-               ?>
-        </td>
-      </tr> -->
-
-    </table>
-
-  <?php if(empty($_SESSION['emploidutemps'])) 
-      {
-        ?>
-        <a href="emploidutemps.php">
-          <input type="submit" name="" value="Gestion emploi du temps">
-        </a>
-    <?php }
-    ?>
-  <br><br>
-
-    <fieldset>
-      <legend>Suivre Execution des cours</legend>
-  <?php
-// $matiereX="sociologie";
-    // $matiereX=trim(addslashes($matiereX));
-// echo $matiereX;
-
-      
-
-
-// ------------------DEB-------------------
-  
-    //    $conn1=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-    //    $sql1=$conn1->prepare("SELECT * FROM emploi_temps_licence1_sf");
-    //    $sql1->execute(); 
-    //    $_SESSION['mytab'] = array();
-    //    while($data1=$sql1->fetch())
-    //    {
-
-    //    $matiere8=$data1['8h_10h'];
-    //    $matiere10=$data1['10h_12h'];
-    //    $matiere13=$data1['13h_14h30'];
-    //    $matiere14=$data1['14h30_16h'];
-    //    $matiere16=$data1['16h_18h']; 
-    //  }
-       
-
-
-
-    //    $conn2=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-    //    $sql2=$conn2->prepare("UPDATE sm1_licence1_sage_femme SET est_programmer ='VRAI' where matiere='".$matiere8."' || matiere='".$matiere10."' || matiere='".$matiere13."' || matiere='".$matiere14."' || matiere='".$matiere16."' ");
-    //    $sql2->execute();
-// ------------------FIN--------------------------------------------
-
-
-       // $connX1=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-     //   $sqlX1=$connX1->prepare("SELECT est_programmer FROM sm1_licence1_sage_femme WHERE est_programmer='VRAI'");
-     //   $sqlX1->execute(); 
-     //   echo"<br>";
-     //   $nbr=$sqlX1->rowCount();
-       // echo $nbr;
-       $_SESSION['i']=$nbr;
-       $conn3=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-       $sql3=$conn3->prepare("SELECT id, professeur, matiere, quantum_horraire, quantum_horraire_cours FROM sm1_licence1_sage_femme where est_programmer='VRAI'");    
-       $sql3->execute(); 
-          $_SESSION['i']=0;
-       while($data2=$sql3->fetch()) 
-       {
-        $_SESSION['i']++;
-        echo $data2['professeur'];
-        echo" ";
-        echo $data2['matiere'];
-        $mat=$data2['matiere'];
-        echo" ";
-        echo $data2['quantum_horraire'];
-        $qh=$data2['quantum_horraire'];
-         $qhc=$data2['quantum_horraire_cours'];
-         $_SESSION['id']=$data2['id']; 
-
-
-
-
-
-
-
-        if(!empty($_POST['varXM'.$_SESSION['id']]))
-        {
-
-          echo "l'id c'est".$_SESSION['id'];
-          $idX=$_SESSION['id'];
-
-          $connxx3=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-          $sqlxx3=$connxx3->prepare("SELECT quantum_horraire_cours FROM sm1_licence1_sage_femme where id='".$idX."'  ");    
-          $sqlxx3->execute();
-          $data2X=$sqlxx3->fetch();
-          $qhc=$data2X['quantum_horraire_cours'];
-          if($qhc>0)
-          {
-            echo"on soustrait mon gars";
-            $qhc--;
-
-            $connxx4=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            $sqlx4=$connxx4->prepare("UPDATE sm1_licence1_sage_femme SET quantum_horraire_cours ='".$qhc."' where id='".$idX."'  ");    
-            $sqlx4->execute();
-          }
-           else if($qhc==0)
-           {
-            echo"on fait rien car egale à 0";
-
-            $qhc=0;
-
-            $connxx4=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            $sqlx4=$connxx4->prepare("UPDATE sm1_licence1_sage_femme SET quantum_horraire_cours ='".$qhc."' where id='".$idX."'  ");    
-            $sqlx4->execute();
-           }
-          // unset($_SESSION['id']);
-          // unset($GLOBALS[$_GET['varXM'.$_SESSION['id']]]);
-
-
-
-        }
-        if(!empty($_POST['varXP'.$_SESSION['id']]))
-        {
-
-          echo "l'id c'est".$_SESSION['id'];
-          $idX=$_SESSION['id'];
-
-          $connyy3=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-          $sqly3=$connyy3->prepare("SELECT quantum_horraire_cours, quantum_horraire FROM sm1_licence1_sage_femme where id='".$idX."'  ");   
-          $sqly3->execute();
-          $data2X=$sqly3->fetch();
-          $qhc=$data2X['quantum_horraire_cours'];
-          $qh=$data2X['quantum_horraire'];
-          if($qhc<$qh)
-          {
-            echo"on incrémente mon gars";
-            $qhc++;
-            $connx4=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
-            $sqlx3=$connx4->prepare("UPDATE sm1_licence1_sage_femme SET quantum_horraire_cours ='".$qhc."' where id='".$idX."'  ");   
-            $sqlx3->execute();
-          }     
-            // unset($GLOBALS[$_GET['varXP'.$_SESSION['id']]]);
-            // unset($GLOBALS[$_GET['art']]);
-
-          }
-            ?>
-
-            <form action=professeur.php method="post">
-              <legend>Matière </legend>
-        <?php 
-
-          ?>
-            <progress name="ido" value="<?php echo $qhc; ?>" max="<?php echo $qh; ?>"></progress><?php echo $qhc."Heures"; ?>
-              <input type="submit" name="varXM<?php echo $_SESSION['id']; ?>" value="-">
-              <input type="submit" name="varXP<?php echo $_SESSION['id']; ?>" value="+">
-              <!-- <button></button> -->
-          </form>
-            <br>
-  <?php   
-
-
-      
-        ?>
-
-  <?php 
-      } 
-
-}else
+if(!empty($_SESSION['effectif_profs']))
+{
+  for($i=1;$i<=$_SESSION['effectif_profs'];$i++)
   {
-    echo"Vous n'etes pas responsaple pedagogique ";
-  }
+    // if(isset($_SESSION['nom_domaine']))
+    // {
+    //   unset($_SESSION['nom_domaine']);
+    // }
 
+    if(isset($_SESSION['nom_'.$i]))
+    {
+      unset($_SESSION['nom_'.$i]);
+    }
+
+    if(isset($_SESSION['prenom_'.$i]))
+    {
+      unset($_SESSION['prenom_'.$i]);
+    }
+
+    if(isset($_SESSION['tel_'.$i]))
+    {
+      unset($_SESSION['tel_'.$i]);
+    }
+
+    if(isset($_SESSION['date_naiss_'.$i]))
+    {
+      unset($_SESSION['date_naiss_'.$i]);
+    }
+
+    if(isset($_SESSION['adresse_'.$i]))
+    {
+      unset($_SESSION['adresse_'.$i]);
+    }
+
+    if(isset($_SESSION['email'.$i]))
+    {
+      unset($_SESSION['email'.$i]);
+    }  
+    
+    if(isset($_SESSION['password'.$i]))
+    {
+      unset($_SESSION['password'.$i]);
+    }
+  }
 }
-  else if((empty($_SESSION['email']))||(empty($_SESSION['password'])) )
-  {
-    echo'veuillez bien remplir le formulaire';
-  }
-
 ?>
-    </fieldset>
+
+
+
+
+
+
+
+
+
+<!--//////////////////////--Pour section existe--////////////////////////////////////////////////////////////////-->
+
+<?php 
+
+// Pour supprimer une spéciliaté donné
+if(!empty($_POST['delete_specialite']))
+{
+  $nom_specialite=$_SESSION['nom_specialite'];
+
+  $conn2=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+  $sql=$conn2->prepare("DELETE from specialite_section WHERE nom_specialite='".$nom_specialite."'");
+  $sql->execute();
+}
+    
+
+
+
+
+ $conn2=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+ $sql=$conn2->prepare("SELECT * from section");
+ $sql->execute();
+
+ while($row = $sql->fetch(PDO::FETCH_ASSOC)) 
+ { 
+  $nom_section=$row['nom_section'];
+  $i=$row['id'];
+// }
+//  {
+  // if(!empty($_GET['nom_section'.$i])){
+  // $_SESSION['nom_section'.$i]=$_GET['nom_section'.$i];
+  // }
+  if(!empty($_POST['nom_section'.$i]))
+  {
+    echo"toto";
+    $conn=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+    $sql=$conn->prepare("SELECT * from section where id ='".$i."' ");
+    $sql->execute();
+    $data=$sql->fetch();
+// afficher toutes les spécialités de la section cliqué
+$name_section=$data['nom_section'];
+$_SESSION['name_section']=$data['nom_section'];
+
+echo $data['nom_section']." exite heiinnn";
+// echo $data['nom_section']." exite heiinnn";
+      // echo"<br> $i";
+
+
+      $conn2=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+      $sql2=$conn2->prepare("SELECT id, nom_specialite, nom_section from specialite_section where nom_section ='".$name_section."' ");
+      $sql2->execute();
+      while($data2=$sql2->fetch())
+      { 
+        $nom_specialite=$data2['nom_specialite'];
+        $id_sp=$data2['id'];
+        ?>
+        <form action="niveau.php" method="post">
+            <input type="submit" name="nom_specialite<?php 
+            echo $id_sp; ?>" value="<?php
+             echo $nom_specialite; ?>">
+        </form>
+
+<?php }
+    }
+}
+?>
+
+<?php 
+if(empty($_POST['delete_section']))
+    {  ?>
+    <form action="directeur.php" method="post">
+          <input type="submit" name="delete_section" value="Supprimer la section">
+    </form>
+<?php } ?>
+
+<?php 
+// if((empty($_POST['modifier_name_section']))||(empty($_POST['ajouter_specialite'])))
+// {     ?>
+    <form action="indexFiliere.php" method="post">
+          <input type="submit" name="modifier_section" value="modifier la section">
+    </form>
+<?php 
+// } ?>
+
+
+    <?php 
+if(!empty($_POST['modifier_section']))
+  { 
+    ?>
+      <form action="indexFiliere.php" method="post">
+          <input type="submit" name="modifier_name_section" value="modifier le nom de la section">
+    </form>
+    <form action="indexFiliere.php" method="post">
+          <input type="submit" name="ajouter_specialite" value="Ajouter une spécialité">
+    </form>
+<?php 
+  }
+  ?>
+    <?php 
+if(!empty($_POST['modifier_name_section']))
+  { 
+  ?>
+    <form action="indexFiliere.php" method="post">
+      <input type="text" name="nom_section" />
+      <input type="submit" value="Entrer la nouvelle nom de la section" required>
+    </form>
+<?php 
+  }
+?>
+
+<?php 
+if(!empty($_POST['nom_section']))
+  { 
+    $ancien_name_section=$_SESSION['name_section'];
+    $nom_section=$_POST['nom_section'];
+
+    $conn4=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+    $sql4=$conn4->prepare("UPDATE section SET nom_section ='".$nom_section."' where nom_section='".$ancien_name_section."'  ");    
+    $sql4->execute();
+
+
+    $conn4=new PDO("mysql:host=127.0.0.1;dbname=upa;charset=utf8","root");
+    $sql4=$conn4->prepare("UPDATE specialite_section SET nom_section ='".$nom_section."' where nom_section='".$ancien_name_section."'  ");    
+    $sql4->execute();
+?>
+
+<?php 
+  }
+?>
+<?php 
+if(!empty($_POST['ajouter_specialite']))
+  {
+    ?> 
+    <form action="indexFiliere.php" method="post">
+      <label>entrer le nombre de spécialité</label>
+      <input type="number" name="nbr_specialite" required/><br>
+      <input type="submit" value="Valider">
+
+    </form>
+
+<?php
+}
+
+if(!empty($_POST['nbr_specialite']))
+   { 
+    $_SESSION['nbrE_specialite']=$_POST['nbr_specialite'];
+    ?>
+      <form action="indexFiliere.php" method="post">
+        <?php
+        for($i=1;$i<=$_POST['nbr_specialite'];$i++)
+        {
+    ?>
+      <label>Entrer le nom de la spécialité</label>
+      <input type="text" name="name_specialite_<?php echo $i; ?>" required/>
+
+      <label>Entrer la duréée de formation de la spécialité</label>
+      <input type="number" name="duree_formation_<?php echo $i; ?>" required/><br>
+<?php
+        }?>
+        <input type="submit" name="valider_specialites" value="valider les specialites">
+      </form>
+  <?php 
+  } 
+?>
+
+
+<?php
+
+if(!empty($_POST['valider_specialites']))
+  { 
+    for($i=1;$i<=$_SESSION['nbrE_specialite'];$i++)
+    {
+      $name_specialite=$_POST['name_specialite_'.$i];
+      $nom_section=$_SESSION['name_section'];
+      $duree_formation=$_POST['duree_formation_'.$i];
+
+      $conn=new PDO("mysql:host=127.0.0.1;dbname=upa","root");
+      $sql = "INSERT INTO specialite_section (nom_specialite, nom_section, duree_formation_specialite)
+       VALUES (?,?,?)";
+      $stmt= $conn->prepare($sql);
+      $stmt->execute([$name_specialite, $nom_section, $duree_formation]);
+    }
+    ?>
+<?php 
+  } 
+?>
+
+	<p>Choisir le filiere</p>
+	<!-- <a href="sage_femme\sage_femme.php">
+		<input type="submit" name="filiere_Sage_femme" value="Sage Femme"></a>
+
+	<a href="infirmier\infirmier.php">
+		<input type="submit" name="filiere_Infirmier" value="Infirmier"></a>
+
+	<a href="assistant_infirmier\assistant_infirmier.php">
+		<input type="submit" name="filiere_AI" value="Assistant Infirmier"></a>
+
+	<a href="biologie\Biologie.php">
+		<input type="submit" name="filiere_Biologie" value="Biologie"></a>
+	<a href="#">
+		<input type="submit" name="XXX" value="Ajouter Filiere"></a> -->
+
+
+
 
 <!-- -------------------FOOTER-----------------------------------------FOOTER-----------------------------------------------------FOOTER---------------------------- -->
 
@@ -820,50 +678,6 @@ if($nbr>0)
     </div>
   </footer>
   <!-- -------------FIN------FOOTER------------------------FIN-----------------FOOTER-----------------------------FIN------------------------FOOTER------------------FIN---------- -->
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
